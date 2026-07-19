@@ -28,6 +28,33 @@
         }
       })();
     </script>
+    <script>
+      window.addEventListener('load', function() {
+        new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+              if (node.querySelectorAll) {
+                node.querySelectorAll('img').forEach(function(img) {
+                  if (img.alt && img.alt.toLowerCase().includes('fab') && !img.dataset.replaced) {
+                    img.dataset.replaced = 'true';
+                    var video = document.createElement('video');
+                    video.src = '/logo-loop.mp4';
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.style.cssText = img.style.cssText;
+                    video.className = img.className;
+                    video.width = img.width || 300;
+                    img.parentNode.replaceChild(video, img);
+                  }
+                });
+              }
+            });
+          });
+        }).observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
     <script type="module" crossorigin src="/assets/index-DhMpPoTy.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-BFhGAMZK.css">
   </head>
